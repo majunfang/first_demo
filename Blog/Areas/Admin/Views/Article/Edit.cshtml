@@ -1,0 +1,217 @@
+﻿
+@{
+    Layout = null;
+}
+@model Blog.Models.DBModel.Articles
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="~/Areas/Admin/css/x-admin.css" media="all">
+    <style>
+        .layui-table-cell {
+            text-align: center;
+            height: 34px;
+            line-height: 34px;
+        }
+    </style>
+</head>
+<body>
+    <form class="layui-form" id="addForm" onsubmit="return false;">
+        <input type="hidden" name="Id" id="Id" value="@this.Model.Id" /> 
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block ">
+                <input type="text" placeholder="请输入标题" name="Title" id="Title" required
+                       lay-verify="required" class="layui-input" value="@this.Model.Title">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签</label>
+            <div class="layui-input-block ">
+                <input type="text" name="Tags" placeholder="请输入标签" id="Tags" required
+                       lay-verify="required" class="layui-input" value="@this.Model.Tags">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传图片</label>
+            <div class="layui-input-block">
+                <input id="uploadImg" type="file" name="file">
+                <input id="MainPicUrl" value="@this.Model.MainPicUrl" name="MainPicUrl" type="hidden" />
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <img id="imgPhoto" class="layui-upload-img" src="~/@this.Model.MainPicUrl" style="width:180px; height:140px" />
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">来源</label>
+            <div class="layui-input-block ">
+                <input type="text" name="Source" id="Source" required
+                       placeholder="请输入来源" value="@this.Model.Source" lay-verify="required" class="layui-input">
+            </div>
+        </div>
+        
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">类别</label>
+            <div class="layui-input-block ">
+                <input type="text" placeholder="请输入类别" name="Type" id="Type" required
+                       lay-verify="required" class="layui-input" value="@this.Model.Type">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否公开</label>
+            <div class="layui-input-block">
+                <select name="className" id="className" value="@this.Model.IsPub">
+                    @{
+
+                        if (this.Model.IsPub == "是")
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="是" selected>是</option>
+                            <option value="否">否</option>
+                        }
+                        else if (this.Model.IsPub == "否")
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="是" >是</option>
+                            <option value="否" selected>否</option>
+                        }
+                        else
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="是">是</option>
+                            <option value="否" >否</option>
+                        }
+
+                    }
+                   
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">显示类型</label>
+            <div class="layui-input-block">
+                <select name="ShowType" id="ShowType" value="@this.Model.ShowType">
+                    @{
+                        if (this.Model.ShowType == "相册")
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="相册" selected>相册</option>
+                            <option value="文章">文章</option>
+                        }
+                        else if (this.Model.ShowType == "文章")
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="相册" >相册</option>
+                            <option value="文章" selected>文章</option>
+                        }
+                        else
+                        {
+                            <option value="">--请选择--</option>
+                            <option value="相册">相册</option>
+                            <option value="文章" >文章</option>
+                        }
+                    }
+                  
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">简介</label>
+            <div class="layui-input-block">
+                <textarea name="SimpleInfo"  id="SimpleInfo" placeholder="请输入简介" class="layui-textarea">
+                    @this.Model.SimpleInfo
+                </textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea id="Cont"  name="Cont" style="display: none;">
+                    @this.Model.Cont
+                </textarea>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="~/Areas/Admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="~/Areas/Admin/js/x-layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['form', 'layedit', 'upload'], function () {
+            var  $ = layui.jquery;
+            var form = layui.form;
+            var upload = layui.upload;
+            var layedit = layui.layedit;
+            //富文本编辑器
+            var editIndex = layedit.build('Cont'); //建立编辑器
+            form.verify({
+                content: function (value) {
+                    layedit.sync(editIndex);
+                }
+            });
+            //图片上传
+            upload.render({
+                elem: '#uploadImg',
+                url: '/Admin/Article/UploadPhoto',
+                done: function (res, index, upload) {
+                 if (res.success) {
+                     $("#MainPicUrl").val(res.remark);
+                     $("#imgPhoto").attr("src", "/" + res.remark);
+                   layer.msg("上传成功");
+                    }
+                else
+                 layer.msg("上传失败:" + res.message);
+                }
+            })
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                layer.msg(JSON.stringify(data.field));
+                $.post("/Admin/Article/Edit", data.field, function (res) {
+                    if (res.success) //服务器端返回的 json 数据中，会有 success、message 等属性
+                    {
+                        layer.msg(res.message, { time: 5000, icon: 6 }); //用弹窗的方式来进行提示
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    }
+                    else
+                        layer.msg(res.message, { time: 5000, icon: 6 }); //用弹窗的方式来进行提示
+                }, "json");
+                return false;
+            });
+
+
+
+
+        });
+
+
+    </script>
+</body>
+</html>

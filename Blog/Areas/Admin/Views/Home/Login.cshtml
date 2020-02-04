@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>博客管理系统</title>
+    <link rel="stylesheet" href="~/Areas/Admin/css/login.css">
+    <script type="text/javascript" src="~/Areas/Admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Admin/js/index.js"></script>
+    <script src="~/Areas/Admin/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body class="login-bg">
+    <canvas id="fullstarbg">你的浏览器不支持canvas标签</canvas>
+    <div class="login">
+        <div class="message">博客系统登录</div>
+        <div id="darkbannerwrap"></div>
+        <form method="post" class="layui-form" id="fLogin">
+            <input name="UserName" placeholder="用户名" type="text" class="layui-input">
+            <hr class="hr15">
+            <input name="Password" placeholder="密码" type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" style="width:100%;" type="button" onclick="sub()">
+            <hr class="hr20">
+            <span>@ViewBag.Msg</span>
+        </form>
+    </div>
+    <script>
+            layui.use(['form'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                layer = layui.layer;
+
+
+            });
+
+            function sub() {
+                var p = $("#fLogin").serialize();
+                $.post("/Admin/Home/Login", p, function (res) {
+                    if (res.success) //服务器端返回的 json 数据中，会有 success、message 等属性
+                        window.location.href = "/Admin/Home"; //进行客户端跳转
+                    else
+                        layer.msg(res.message, { time: 2000, icon: 6 }); //用弹窗的方式来进行提示
+                }, "json");
+            }
+
+    </script>
+
+
+</body>
+</html>

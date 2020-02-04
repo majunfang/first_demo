@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+@model string
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="~/Areas/Admin/css/x-admin.css" media="all">
+    <style>
+        #addForm {
+            padding-right: 50%;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <form class="layui-form" id="addForm" onsubmit="return false;">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block ">
+                <input type="text" placeholder="请输入用户名" name="UserName" id="UserName" required
+                       lay-verify="required" readonly class="layui-input" value="@ViewBag.A">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">原始密码</label>
+            <div class="layui-input-block ">
+                <input type="password" placeholder="请输入原始密码" name="Password" id="Password" required
+                       lay-verify="required" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block ">
+                <input type="password" placeholder="请输入新密码" name="NewPsw" id="NewPsw" required
+                       lay-verify="required" class="layui-input" >
+            </div>
+        </div>
+
+       
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="~/Areas/Admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="~/Areas/Admin/js/x-layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['form'], function () {
+            var $ = layui.jquery;
+            var form = layui.form;
+           
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+
+
+                $.post("/Admin/Home/Reset", data.field, function (res) {
+                    if (res.success) //服务器端返回的 json 数据中，会有 success、message 等属性
+                    {
+                        layer.msg(res.message, { time: 5000, icon: 6 }); //用弹窗的方式来进行提示
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    }
+                    else
+                        layer.msg(res.message, { time: 5000, icon: 6 }); //用弹窗的方式来进行提示
+                }, "json");
+                return false;
+            });
+
+
+
+
+        });
+
+
+    </script>
+</body>
+</html>
+

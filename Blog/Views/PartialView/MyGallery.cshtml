@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Blog.Models.UIData>
+<h2>我的相册</h2>
+<ul>
+    @{
+        if (this.Model != null)
+        {
+            foreach (var item in this.Model)
+            {
+
+               
+                    <li><a href="~/Share/Detail/@item.Id"><img src="~/@item.PicUrl"></a></li>
+                 
+               
+            }
+        }
+    }
+</ul>

@@ -1,0 +1,46 @@
+﻿@model Blog.Models.DBModel.User
+@using Blog.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutFont.cshtml";
+}
+
+<aside>
+    <div class="l_box">
+        <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+                <i><img src="~/@ViewBag.A.SelfPhoto"></i>
+                <p><b>@ViewBag.A.UserName</b>@ViewBag.A.SelfSlogo</p>
+            </ul>
+        </div>
+        <div class="wdxc">
+            <h2>我的相册</h2>
+            <ul>
+                @{
+                    foreach (var item in ViewBag.B)
+                    {
+                        <li><a href="/Home/Detail/@item.BelongToArticles"><img src="~/@item.PicUrl"></a></li>
+                    }
+                }
+
+            </ul>
+        </div>
+        <div class="guanzhu">
+            <h2>关注我 么么哒</h2>
+            <ul>
+                <img src="~/images/wx.jpg">
+            </ul>
+        </div>
+    </div>
+</aside>
+<div class="r_box">
+    <main>
+        <ul class="about">
+           @Html.Raw(@ViewBag.A.AboutMe);
+              
+          
+
+        </ul>
+    </main>
+</div>
